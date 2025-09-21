@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Simple MP3 Player</h2>
+  <div class="mb-4">
+    <input type="file" accept="audio/mp3" multiple (change)="onFileSelected($event)"
+           class="file-input file-input-bordered w-full max-w-xs"/>
+    <div class="text-sm text-gray-600 mt-1">
+      Select one or more MP3 files for sequential playback
+    </div>
+  </div>
+
+  @if (audioFiles.length > 0) {
+    <div class="mb-4 p-3 bg-base-200 rounded-lg">
+      <div class="text-sm">
+        <strong>Playlist:</strong> {{ audioFiles.length }} audio file(s) selected
+      </div>
+      @if (currentAudioIndex >= 0) {
+        <div class="text-sm">
+          <strong>Current:</strong> {{ currentAudioIndex + 1 }} of {{ audioFiles.length }} - {{
+            audioFiles[currentAudioIndex].name
+          }}
+        </div>
+      }
+    </div>
+  }
+
+  @if (audioSrc != null) {
+    <div class="audio-container">
+      <audio #audioPlayer controls [src]="audioSrc" class="w-full max-w-2xl rounded-lg shadow-lg"></audio>
+      <div class="controls">
+        <button (click)="play()">Play</button>
+        <button (click)="pause()">Pause</button>
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" [(ngModel)]="volume" (input)="setVolume()"/>
+      </div>
+    </div>
+  }
+</div>
